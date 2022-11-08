@@ -39,7 +39,10 @@ export default class TransformText {
     if (!this.symbols.includes(letter)) {
       return letter;
     }
-    if (!text[index + 1] !== " " && !this.symbols.includes(text[index + 1])) {
+    if (
+      text[index + 1] !== (" " || "") &&
+      !this.symbols.includes(text[index + 1])
+    ) {
       return (letter += " ");
     } else if (this.symbols.includes(text[index + 1])) {
       return "";
@@ -78,12 +81,12 @@ export default class TransformText {
 
   textTransforming() {
     // start
-    console.log("start", this.text);
+    // console.log("start", this.text);
 
     this.#firstLetterTransforming(this.text);
 
     // first letter
-    console.log("first letter", this.text);
+    // console.log("first letter", this.text);
 
     this.text = this.text
       .map((letter, index) => {
@@ -92,7 +95,7 @@ export default class TransformText {
       .filter((letter) => letter !== "");
 
     // spases
-    console.log("spaces", this.text);
+    // console.log("spaces", this.text);
 
     this.text = this.text
       .map((letter, index) => {
@@ -101,19 +104,19 @@ export default class TransformText {
       .filter((letter) => letter !== "");
 
     // symbols
-    console.log("symbols", this.text);
+    // console.log("symbols", this.text);
 
     this.text = this.text.map((letter, index) => {
       return this.#letterCaseTransforming(this.text, letter, index);
     });
 
     // case
-    console.log("case", this.text);
+    // console.log("case", this.text);
 
     this.text = this.#dotAdd(this.text);
 
     // final
-    console.log("final", this.text);
+    // console.log("final", this.text);
 
     return this.text.join("");
   }

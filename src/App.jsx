@@ -1,19 +1,23 @@
 import { useState } from "react";
 import "./App.css";
 import TextArea from "./components/TextArea";
-import TransformText from "./script/Formate";
+import TransformText from "./script/Transform";
 
 function App() {
   const [textTransformed, setTextTransformed] = useState(false);
   const [text, setText] = useState("");
 
-  const transformButtonClick = () => {
+  const handleTransformButtonClick = () => {
+    if (!text) {
+      return;
+    }
     const textTransformator = new TransformText(text);
     setText(textTransformator.textTransforming());
     setTextTransformed(true);
   };
 
-  const copyButtonClick = () => {
+  const handleCopyButtonClick = () => {
+    navigator.clipboard.writeText(text);
     setText("");
     setTextTransformed(false);
   };
@@ -24,14 +28,14 @@ function App() {
         {!textTransformed ? (
           <TextArea
             areaOnChange={(e) => setText(e.target.value)}
-            buttonOnClick={() => transformButtonClick()}
+            buttonOnClick={handleTransformButtonClick}
           />
         ) : (
           <>
             <div className="text-input">{text}</div>
             <button
               className="transforming-button"
-              onClick={() => copyButtonClick()}
+              onClick={handleCopyButtonClick}
             >
               Copy
             </button>
